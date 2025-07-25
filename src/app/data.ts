@@ -19,7 +19,7 @@ export const projects = [
     title: "Leiko Ikemura",
     description:
       "Leiko Ikemura creates worlds where the visible and the invisible intertwine. Oscillating between figuration and abstraction, she shapes environments inhabited by mythical beings that blend human and animal features.",
-    src: "water.jpg",
+    src: "stairway.jpg",
     link: "https://www.ignant.com/2025/02/05/a-space-that-breathes-inside-the-atelier-of-leiko-ikemura/",
     color: "#C2491D",
   },
