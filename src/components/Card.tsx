@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import styles from './card.module.css';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 interface CardProps {
     title: string;
@@ -13,8 +15,16 @@ interface CardProps {
 }
 
 const Card = ({ title, description, src, link, color, i }: CardProps) => {
+    const containerRef = useRef(null);
+    // track scroll progress of the container
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ['start end', 'start start'] // top of viewport -> bottom of the container (0) -> start of viewport -> start of container (1)
+    })
+    const imageScale = useTransform(scrollYProgress, [0, 1], [2, 1]);
+
     return (
-        <div className={styles.cardContainer}>
+        <div ref={containerRef} className={styles.cardContainer}>
             <div
                 className={styles.card}
                 style={{ backgroundColor: color, top: `calc(-5vh + ${i * 25}px)` }} // dynamic top position which create stacking effect
@@ -34,13 +44,16 @@ const Card = ({ title, description, src, link, color, i }: CardProps) => {
                     </div>
                     {/* Right */}
                     <div className={styles.imageContainer}>
-                        <div className={styles.inner}>
+                        <motion.div
+                            className={styles.inner}
+                            style={{ scale: imageScale }}
+                        >
                             <Image
                                 fill
                                 src={`/images/${src}`}
                                 alt={title}
                             />
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>
